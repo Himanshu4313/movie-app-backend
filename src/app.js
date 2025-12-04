@@ -1,5 +1,11 @@
-import express from 'express';
+import express, { urlencoded } from 'express';
+import apiRoutes from './routes/index.js';
 const app = express();
+
+app.use(express.json()); // accept json payload data
+app.use(express.urlencoded({extended:true})); // this give a permission to get url encoded data with req.
+
+app.use('/api' , apiRoutes);
 
 app.get('/',(req,res)=>{
      res.json({
