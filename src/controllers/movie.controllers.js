@@ -46,7 +46,7 @@ export const getAllMovies = async (req, res) => {
     const movies = await movieModel.find({});
 
     if (!movies) {
-      errorResponse.message = "NO movie collection found";
+      errorResponse.message = "NO movie collections found";
       return res.status(501).json(errorResponse);
     }
 
@@ -64,7 +64,7 @@ export const getAllMovies = async (req, res) => {
 
 export const deleteMovie = async (req, res) => {
   try {
-    const res = await movieModel.deleteOne({
+    const response = await movieModel.deleteOne({
       _id: req.params.id,
     });
 
@@ -73,10 +73,13 @@ export const deleteMovie = async (req, res) => {
         "Unable to delete this movie or the movie is not found";
       return res.status(501).json(errorResponse);
     }
-
-    successResponse.data = res;
+    
+    
+    successResponse.data = response;
     successResponse.message = "Successfully deleted the movie details";
     return res.status(201).json(successResponse);
+
+   
   } catch (error) {
     console.log(error);
     errorResponse.error = error.message;
@@ -96,7 +99,7 @@ export const editMovieDetails = async (req, res) => {
       return res.status(501).json(errorResponse);
     }
 
-    await updateRes.save();
+    // await updateRes.save();
     //if successfully update the movie details
     successResponse.data = updateRes;
     successResponse.message = "Successfully update movie details";
