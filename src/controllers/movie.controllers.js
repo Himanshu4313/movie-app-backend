@@ -68,18 +68,15 @@ export const deleteMovie = async (req, res) => {
       _id: req.params.id,
     });
 
-    if (!res) {
+    if (!response) {
       errorResponse.message =
         "Unable to delete this movie or the movie is not found";
       return res.status(501).json(errorResponse);
     }
-    
-    
+
     successResponse.data = response;
     successResponse.message = "Successfully deleted the movie details";
     return res.status(201).json(successResponse);
-
-   
   } catch (error) {
     console.log(error);
     errorResponse.error = error.message;
@@ -92,15 +89,15 @@ export const editMovieDetails = async (req, res) => {
   try {
     const id = req.params.id;
     const updateOption = req.body; // This is a json object
-    const updateRes = await movieModel.findByIdAndUpdate(id, updateOption);
+    const updateRes = await movieModel.findByIdAndUpdate(id, updateOption, {
+      new: true,
+    }); // {new : true}  give me new movie details after update data
 
     if (!updateRes) {
       errorResponse.message = "Unable for update the movie details";
       return res.status(501).json(errorResponse);
     }
 
-    // await updateRes.save();
-    //if successfully update the movie details
     successResponse.data = updateRes;
     successResponse.message = "Successfully update movie details";
     return res.status(201).json(successResponse);

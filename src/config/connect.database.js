@@ -10,6 +10,6 @@ async function connectDatabase(){
     } catch (error) {
         console.log("Database connectivity error: ",error);
     }
-}
+};
 
 export default connectDatabase;
